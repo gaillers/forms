@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Header = () => {
     return (
         <HeaderBar>
-            <h1>Titles Form</h1>
+            <h1>Register</h1>
         </HeaderBar>
     )
 }
