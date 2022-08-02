@@ -22,7 +22,15 @@ module.exports.register = async (req, res) => {
             Password: hash,
         })
 
-    } catch (error) { }
+        await newUser.save()
+
+        res.json({
+            newUser, message: 'The registration was successful'
+        })
+
+    } catch (error) { 
+        res.json({message: 'Registration error'})
+    }
 }
 
 // Login 

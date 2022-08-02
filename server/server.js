@@ -8,19 +8,18 @@ const authRoute = require('./routes/auth');
 const app = express();
 dotenv.config();
 
+// Constants
 const PORT = process.env.PORT;
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_NANE = process.env.DB_NANE;
 
+// Middleware
 app.use(cors())
 app.use(express.json())
 app.listen(PORT, () => console.log(`Running on port: ${PORT}`))
 
-app.get('/', (req, res) => {
-    res.json('Connected')
-})
-
+// Routers
 app.use('/api/auth', authRoute)
 
 async function start() {
