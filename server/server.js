@@ -17,7 +17,6 @@ const DB_NANE = process.env.DB_NANE;
 // Middleware
 app.use(cors())
 app.use(express.json())
-app.listen(PORT, () => console.log(`Running on port: ${PORT}`))
 
 // Routers
 app.use('/api/auth', authRoute)
@@ -28,9 +27,13 @@ async function start() {
             `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.g4cql.mongodb.net/${DB_NANE}?retryWrites=true&w=majority`,
             console.log('MongoDB connected')
         )
+        
+        app.listen(PORT, () => console.log(`Running on port: ${PORT}`))
     } catch (error) {
         console.log(error)
     }
 }
 start()
+
+module.exports = app;
 
