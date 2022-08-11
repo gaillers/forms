@@ -1,13 +1,13 @@
 const User = require('../models/Users');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // Register
 module.exports.register = async (req, res) => {
     try {
-        const { FirsName, LastName, Email, Age, Phone, Password} = req.body
+        const { FirsName, LastName, Email, Age, Phone, Password } = req.body
 
         const isUsed = await User.findOne({ Email })
-
         if (isUsed) {
             return res.json({
                 message: "The user already there's"
@@ -28,15 +28,38 @@ module.exports.register = async (req, res) => {
             newUser, message: 'The registration was successful'
         })
 
-    } catch (error) { 
-        res.json({message: 'Registration error'})
+    } catch (error) {
+        res.json({ message: 'Registration error' })
     }
 }
 
 // Login 
 module.exports.login = async (req, res) => {
     try {
-    } catch (error) { }
+        const { Email, Password } = req.body
+
+        const user = await User.findOne({ Email })
+        if (!user) {
+            return res.json({
+                message: "The user already there's"
+            })
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(Password, user.Password)
+        if (!isPasswordCorrect) {
+            return res.json({
+                message: 'Error passwords',
+            })
+        }
+
+    } catch (error) {
+        res.json({ message: 'Login error' })
+    }
+
+    const token = jwt.sing({
+        id: user._id,
+        Email, 
+    })
 }
 
 // Get ME
